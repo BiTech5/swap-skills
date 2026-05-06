@@ -84,3 +84,8 @@ Please keep changes focused and include updates to docs when behavior changes.
 
 - Frontend guide: [frontend/GUIDE.md](frontend/GUIDE.md)
 - Server guide: [server/GUIDE.md](server/GUIDE.md)
+
+## License
+
+This project is licensed under the MIT License.
+See [LICENSE](LICENSE) for details.
