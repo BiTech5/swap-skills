@@ -1,10 +1,10 @@
-import User from "../models/User";
-import bcrypt from "bcryptjs";
-import { generateAccessToken,generateRefreshToken } from "../utils/token";
+import User from "../models/User.js";
+import bcrypt from "bcrypt";
+import { generateAccessToken,generateRefreshToken } from "../utils/token.js";
 
 
 let refreshTokens=[];
-export const register=(req,res)=>{
+export const register=async (req,res)=>{
     try{
         const {name,email,password,role}=req.body;
         const existingUser=await User.findOne({email});
@@ -26,7 +26,7 @@ export const register=(req,res)=>{
 }
 
 
-export const login=(req,res)=>{
+export const login=async (req,res)=>{
     try{
         const {email, password}=req.body;
         const user=await User.findOne(email);
