@@ -7,6 +7,9 @@ let refreshTokens=[];
 export const register=async (req,res)=>{
     try{
         const {name,email,password,role}=req.body;
+        if(!name || !email || !password){
+            return res.status(400).send("name, email and password are required");
+        }
         const existingUser=await User.findOne({email});
         if(existingUser){
             return res.status(400).send("Email already exists");
@@ -29,18 +32,25 @@ export const register=async (req,res)=>{
 export const login=async (req,res)=>{
     try{
         const {email, password}=req.body;
-        const user=await User.findOne(email);
+        if(!email || !password){
+            return res.status(400).send("email and password are required");
+        }
+        const user=await User.findOne({email}).select("+password");
         if(!user){
             return res.status(404).send("User not found");
         }
-        const isMatch=await bcrypt.comapre(
+        if(!user.password){
+            return res.status(500).send("User password is not available");
+        }
+        const isMatch=await bcrypt.compare(
             password,user.password
-        )
+        );
         if(!isMatch){
             return res.status(400).send("Invalid password");
         }
         const accessToken=generateAccessToken(user);
         const refreshToken=generateRefreshToken(user);
+        refreshToken
         refreshTokens.push(refreshToken);
         return res.status(200).json({
             accessToken,
