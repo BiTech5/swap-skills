@@ -7,6 +7,8 @@ import morgan from 'morgan';
 import connectDB from './config/db.js';
 import healthRoutes from './routes/health.routes.js';
 
+import authRoutes from "./routes/authRoutes.js";
+
 dotenv.config();
 
 const app = express();
@@ -18,6 +20,8 @@ app.use(express.json());
 app.use(morgan('dev'));
 
 app.use('/api/health', healthRoutes);
+// route for auth
+app.use("/auth",authRoutes);
 
 app.get('/', (_req, res) => {
   res.json({ message: 'Swap Skills API is running' });
