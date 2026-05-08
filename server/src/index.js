@@ -28,7 +28,7 @@ app.get('/', (_req, res) => {
 });
 
 // user route
-app.user("/user",userRoutes);
+app.use("/user",userRoutes);
 
 const startServer = async () => {
   try {

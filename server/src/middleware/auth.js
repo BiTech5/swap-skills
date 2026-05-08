@@ -1,6 +1,6 @@
-import jwt, { decode } from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 
-export default auth=(req,res,next)=>{
+const auth=(req,res,next)=>{
     try{
         const authHeader=req.headers.authorization;
         if(!authHeader){
@@ -8,10 +8,12 @@ export default auth=(req,res,next)=>{
         }
         const token=authHeader.split(" ")[1];
         const decoded=jwt.verify(token, process.env.JWT_SECRET);
-        req.user=decode;
+        req.user=decoded;
         next();
     }catch(err){
         res.status(401).send(err.message);
         console.error(err.message);
     }
 }
+
+export default auth;
