@@ -8,7 +8,7 @@ import connectDB from './config/db.js';
 import healthRoutes from './routes/health.routes.js';
 
 import authRoutes from "./routes/authRoutes.js";
-
+import userRoutes from "./routes/userRoutes.js"
 dotenv.config();
 
 const app = express();
@@ -26,6 +26,9 @@ app.use("/auth",authRoutes);
 app.get('/', (_req, res) => {
   res.json({ message: 'Swap Skills API is running' });
 });
+
+// user route
+app.user("/user",userRoutes);
 
 const startServer = async () => {
   try {
