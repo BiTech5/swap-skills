@@ -29,7 +29,17 @@ const userSchema=new mongoose.Schema({
         required:true,
         enum:["user","admin"],
         default:"user"
-    }
+    },
+    bio:{
+        type:String,
+    },
+    skillsoffered:[{
+        type:String,
+        default:""
+    }],
+    skillswanted:[{
+        type:String
+    }]
 },{
     timestamps:true
 });
