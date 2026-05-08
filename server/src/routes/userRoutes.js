@@ -7,3 +7,5 @@ const router=express.Router();
 router.get("/profile",auth,getProfile);
 
 router.patch("/profile",auth,updateProfile);
+
+export default router;
