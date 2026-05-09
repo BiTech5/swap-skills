@@ -8,7 +8,8 @@ import connectDB from './config/db.js';
 import healthRoutes from './routes/health.routes.js';
 
 import authRoutes from "./routes/authRoutes.js";
-import userRoutes from "./routes/userRoutes.js"
+import userRoutes from "./routes/userRoutes.js";
+import requestRoutes from "./routes/requestsRoutes.js";
 dotenv.config();
 
 const app = express();
@@ -30,6 +31,8 @@ app.get('/', (_req, res) => {
 // user route
 app.use("/user",userRoutes);
 
+// requests route
+app.use("/requests",requestRoutes);
 const startServer = async () => {
   try {
     await connectDB();
