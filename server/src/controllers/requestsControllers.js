@@ -17,9 +17,28 @@ export const createRequest=async(req,res)=>{
 
 export const getMyRequests=async(req,res)=>{
     try{
-        const requests=await Requests.find({
-            receiver:req.user.id
-        }).populate("sender","name email");
+        const direction = String(req.query.direction || "all").toLowerCase();
+        console.log(direction)
+        let filter;
+
+        if (direction === "sent") {
+            filter = { sender: req.user.id };
+        } else if (direction === "received") {
+            filter = { receiver: req.user.id };
+        } else if (direction === "all") {
+            filter = {
+                $or: [{ sender: req.user.id }, { receiver: req.user.id }]
+            };
+        } else {
+            return res
+                .status(400)
+                .send("Invalid direction. Use sent, received, or all");
+        }
+
+        const requests=await Requests.find(filter)
+            .populate("sender","name email")
+            .populate("receiver","name email")
+            .sort({ createdAt: -1 });
         res.json(requests);
     }catch(err){
         res.status(500).send(err.message);
