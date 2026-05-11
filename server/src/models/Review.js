@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const reviewSchema=new mongoose.Shema({
+const reviewSchema=new mongoose.Schema({
 	reviewer:{
 		type:mongoose.Schema.Types.ObjectId,
 		ref:"User",
@@ -11,7 +11,7 @@ const reviewSchema=new mongoose.Shema({
 		ref:"User",
 		required:true
 	},
-	retings:{
+	rating:{
 		type:Number,
 		required:true,
 		min:1,
