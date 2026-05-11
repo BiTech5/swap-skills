@@ -1,4 +1,8 @@
 import Requests from "../models/Requests.js";
+import {
+    notifyRequestCreated,
+    notifyRequestStatusChanged,
+} from "../services/notificationService.js";
 
 export const createRequest=async(req,res)=>{
     try{
@@ -8,6 +12,13 @@ export const createRequest=async(req,res)=>{
             skill:req.body.skill,
             message:req.body.message
         });
+
+        await notifyRequestCreated({
+            receiverId: requests.receiver,
+            senderId: requests.sender,
+            skill: requests.skill,
+        });
+
         res.status(201).json(requests);
 
     }catch(err){
@@ -56,8 +67,20 @@ export const updateRequestStatus=async(req,res)=>{
         if(request.receiver.toString()!==req.user.id){
             return res.status(403).send("Unauthorized");
         }
+        const allowedStatuses = ["pending", "accepted", "rejected"];
+        if (!allowedStatuses.includes(req.body.status)) {
+            return res.status(400).send("Invalid status");
+        }
         request.status=req.body.status;
         await request.save();
+
+        await notifyRequestStatusChanged({
+            senderId: request.sender,
+            receiverId: request.receiver,
+            status: request.status,
+            skill: request.skill,
+        });
+
         res.json(request);
     }catch(err){
         res.status(500).send(err.message);}

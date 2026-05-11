@@ -1,4 +1,5 @@
 import Review from "../models/Review.js";
+import { notifyReviewCreated } from "../services/notificationService.js";
 
 export const createReviews = async (req, res) => {
   try {
@@ -9,6 +10,13 @@ export const createReviews = async (req, res) => {
       rating,
       comment,
     });
+
+    await notifyReviewCreated({
+      reviewedUserId: review.reviewedUser,
+      reviewerId: review.reviewer,
+      rating: review.rating,
+    });
+
     res.status(201).json(review);
   } catch (err) {
     res.status(500).send(err.message);

@@ -46,7 +46,7 @@ app.use("/reviews",reviewRoutes);
 app.use("/search",searchRoutes);
 
 // notification route
-app.use("/notification",notificationRoutes);
+app.use("/notifications",notificationRoutes);
 
 const startServer = async () => {
   try {
