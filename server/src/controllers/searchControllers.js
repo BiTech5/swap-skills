@@ -2,7 +2,7 @@ import User from "../models/User.js";
 
 export const searchUser=async (req,res)=>{
     try{
-        const {skill}=req.query.skill;
+        const {skill}=req.query;
         if(!skill){
             return res.status(400).send("Skill query required");
         }
