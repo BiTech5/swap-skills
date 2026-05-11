@@ -10,6 +10,8 @@ import healthRoutes from './routes/health.routes.js';
 import authRoutes from "./routes/authRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import requestRoutes from "./routes/requestsRoutes.js";
+import reviewRoutes from "./routes/reviewRoutes.js"
+
 dotenv.config();
 
 const app = express();
@@ -33,6 +35,10 @@ app.use("/user",userRoutes);
 
 // requests route
 app.use("/requests",requestRoutes);
+
+// review route
+app.use("/reviews",reviewRoutes);
+
 const startServer = async () => {
   try {
     await connectDB();
