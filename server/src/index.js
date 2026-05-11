@@ -10,8 +10,11 @@ import healthRoutes from './routes/health.routes.js';
 import authRoutes from "./routes/authRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import requestRoutes from "./routes/requestsRoutes.js";
-import reviewRoutes from "./routes/reviewRoutes.js"
-import searchRoutes from "./routes/searchRoutes.js"
+import reviewRoutes from "./routes/reviewRoutes.js";
+import searchRoutes from "./routes/searchRoutes.js";
+import notificationRoutes from "./routes/notificationRoutes.js";
+
+
 dotenv.config();
 
 const app = express();
@@ -39,8 +42,11 @@ app.use("/requests",requestRoutes);
 // review route
 app.use("/reviews",reviewRoutes);
 
-//search fileter route
+//search filter route
 app.use("/search",searchRoutes);
+
+// notification route
+app.use("/notification",notificationRoutes);
 
 const startServer = async () => {
   try {
