@@ -11,7 +11,7 @@ import authRoutes from "./routes/authRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import requestRoutes from "./routes/requestsRoutes.js";
 import reviewRoutes from "./routes/reviewRoutes.js"
-
+import searchRoutes from "./routes/searchRoutes.js"
 dotenv.config();
 
 const app = express();
@@ -38,6 +38,9 @@ app.use("/requests",requestRoutes);
 
 // review route
 app.use("/reviews",reviewRoutes);
+
+//search fileter route
+app.use("/search",searchRoutes);
 
 const startServer = async () => {
   try {
