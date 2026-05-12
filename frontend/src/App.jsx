@@ -1,7 +1,9 @@
 import { useAppStore } from './store/useAppStore';
+import { useSamplePost } from './hooks/useSamplePost';
 
 const App = () => {
   const { count, increment, decrement, reset } = useAppStore();
+  const { data, isLoading, isError, error } = useSamplePost();
 
   return (
     <main className="h-screen flex flex-col items-center justify-center">
@@ -19,6 +21,9 @@ const App = () => {
           reset
         </button>
       </div>
+      {isLoading && <p>Loading sample query...</p>}
+      {isError && <p>Error: {error.message}</p>}
+      {data && <p>Sample query title: {data.title}</p>}
     </main>
   );
 };
