@@ -5,10 +5,6 @@ import { useUserProfile } from "../api/userProfile";
 const Home = () => {
   const { data: userProfile, isPending, error } = useUserProfile();
   const profile = userProfile;
-  console.log(userProfile)
-  const displayName =
-    profile?.name || profile?.fullName || profile?.username || profile?.email || "User";
-
   const stats = [
     { label: "Skills Offered", value: profile?.skillsoffered.length },
     { label: "Skills Wanted", value: profile?.skillswanted.length },
