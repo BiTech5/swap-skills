@@ -19,9 +19,10 @@ const Login = () => {
       const data = await loginUser(formData);
       console.log(data);
       const token = data?.accessToken;
+      const refreshToken = data?.refreshToken;
 
       if (token) {
-        login(token);
+        login(token, refreshToken);
         navigate("/");
       }
     } catch (err) {

@@ -1,12 +1,17 @@
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
+import { useUserProfile } from "../api/userProfile";
 
 const Home = () => {
+  const { data: userProfile, isPending, error } = useUserProfile();
+  const profile = userProfile;
+  console.log(userProfile)
+  const displayName =
+    profile?.name || profile?.fullName || profile?.username || profile?.email || "User";
+
   const stats = [
-    { label: "Skills Offered", value: 8 },
-    { label: "Skills Learning", value: 3 },
-    { label: "Swap Requests", value: 12 },
-    { label: "Completed Swaps", value: 5 },
+    { label: "Skills Offered", value: profile?.skillsoffered.length },
+    { label: "Skills Wanted", value: profile?.skillswanted.length },
   ];
 
   return (
@@ -15,9 +20,8 @@ const Home = () => {
       <div className="flex">
         <Sidebar />
         <main className="w-full p-6">
-          <h1 className="mb-6 text-2xl font-bold text-slate-900">Dashboard</h1>
-
-          <section className="mb-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <h1 className="text-xl font-bold">Dashboard</h1><br />
+          <section className="mb-8 grid gap-4 sm:grid-cols-1 lg:grid-cols-2">
             {stats.map((item) => (
               <article
                 key={item.label}

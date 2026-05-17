@@ -1,6 +1,7 @@
 import User from "../models/User.js";
 import bcrypt from "bcrypt";
 import { generateAccessToken,generateRefreshToken } from "../utils/token.js";
+import jwt from "jsonwebtoken";
 
 
 let refreshTokens=[];
@@ -50,7 +51,6 @@ export const login=async (req,res)=>{
         }
         const accessToken=generateAccessToken(user);
         const refreshToken=generateRefreshToken(user);
-        refreshToken
         refreshTokens.push(refreshToken);
         return res.status(200).json({
             accessToken,
@@ -58,6 +58,35 @@ export const login=async (req,res)=>{
         })
     }
     catch(err){
+        res.status(500).send(err.message);
+    }
+}
+
+export const refresh=async (req,res)=>{
+    try{
+        const {refreshToken}=req.body;
+        if(!refreshToken){
+            return res.status(400).send("Refresh token is required");
+        }
+
+        if(!refreshTokens.includes(refreshToken)){
+            return res.status(403).send("Invalid refresh token");
+        }
+
+        const decoded=jwt.verify(refreshToken, process.env.JWT_SECRET);
+        const user=await User.findById(decoded.id);
+        if(!user){
+            refreshTokens=refreshTokens.filter((token)=>token!==refreshToken);
+            return res.status(404).send("User not found");
+        }
+
+        const accessToken=generateAccessToken(user);
+        return res.status(200).json({accessToken});
+    }catch(err){
+        if(err.name==="TokenExpiredError" || err.name==="JsonWebTokenError"){
+            refreshTokens=refreshTokens.filter((token)=>token!==req.body?.refreshToken);
+            return res.status(403).send("Invalid refresh token");
+        }
         res.status(500).send(err.message);
     }
 }
