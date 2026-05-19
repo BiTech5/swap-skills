@@ -1,5 +1,4 @@
 import Navbar from "../components/Navbar";
-import Sidebar from "../components/Sidebar";
 import { useUserProfile } from "../api/userProfile";
 
 const Home = () => {
@@ -13,9 +12,7 @@ const Home = () => {
   return (
     <div>
       <Navbar />
-      <div className="flex">
-        <Sidebar />
-        <main className="w-full p-6">
+        <main className="mx-auto w-full max-w-6xl p-6">
           <h1 className="text-xl font-bold">Dashboard</h1><br />
           <section className="mb-8 grid gap-4 sm:grid-cols-1 lg:grid-cols-2">
             {stats.map((item) => (
@@ -61,7 +58,6 @@ const Home = () => {
             </article>
           </section>
         </main>
-      </div>
     </div>
   );
 };
