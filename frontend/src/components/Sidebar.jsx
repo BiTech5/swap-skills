@@ -13,6 +13,13 @@ function Sidebar() {
         >
           Dashboard
         </NavLink>
+
+        <NavLink
+          to="/search"
+          className="border px-4 py-2 rounded hover:bg-gray-50 transition-colors"
+        >
+          Search
+        </NavLink>
         <button
           className="border px-4 py-2 rounded cursor-pointer text-left hover:bg-gray-50 transition-colors"
           onClick={logout}
