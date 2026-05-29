@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useQuery, useMutation } from "@tanstack/react-query";
+import { useState, useEffect } from "react";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import api from "../api/api";
 import { createRequest } from "../api/requests";
 import Navbar from "../components/Navbar";
@@ -8,6 +8,13 @@ const Search = () => {
   const [skill, setSkill] = useState("");
   const [requestingUser, setRequestingUser] = useState(null);
   const [message, setMessage] = useState("");
+  const queryClient = useQueryClient();
+
+  useEffect(() => {
+    return () => {
+      queryClient.removeQueries({ queryKey: ["search-users"] });
+    };
+  }, [queryClient]);
 
   const { data = [], refetch, isFetching, error } = useQuery({
     queryKey: ["search-users"],
