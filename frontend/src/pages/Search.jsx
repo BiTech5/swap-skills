@@ -8,6 +8,7 @@ const Search = () => {
   const [skill, setSkill] = useState("");
   const [requestingUser, setRequestingUser] = useState(null);
   const [message, setMessage] = useState("");
+  const [hasSearched, setHasSearched] = useState(false);
 
   const { data = [], refetch, isFetching, error } = useQuery({
     queryKey: ["search-users"],
@@ -34,6 +35,7 @@ const Search = () => {
 
   const handleSearch = () => {
     if (!skill.trim()) return;
+    setHasSearched(true);
     refetch();
   };
 
@@ -45,7 +47,6 @@ const Search = () => {
     });
   };
 
-  const hasSearched = data.length > 0 || error || isFetching;
   const searchedSkill = skill.trim();
 
   return (
