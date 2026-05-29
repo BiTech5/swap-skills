@@ -7,11 +7,12 @@ export const searchUser=async (req,res)=>{
             return res.status(400).send("Skill query required");
         }
         const users=await User.find({
+            _id: { $ne: req.user.id },
             skillsoffered:{
                 $regex:skill,
                 $options:"i"
             }
-        }).select(-"password");
+        }).select("-password");
         res.status(200).json(users);
     }catch(err){
         res.status(500).send(err.message);
