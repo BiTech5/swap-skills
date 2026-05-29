@@ -67,13 +67,13 @@ const Requests = () => {
                         <div className="mt-4 flex gap-2">
                           <button
                             onClick={() => handleStatusUpdate(req._id, "accepted")}
-                            className="rounded bg-slate-900 px-3 py-1 text-xs font-medium text-white hover:bg-slate-700"
+                            className="rounded bg-slate-900 px-3 py-1 text-xs font-medium text-white hover:bg-slate-700 cursor-pointer"
                           >
                             Accept
                           </button>
                           <button
                             onClick={() => handleStatusUpdate(req._id, "rejected")}
-                            className="rounded border border-slate-300 px-3 py-1 text-xs font-medium text-slate-700 hover:bg-slate-100"
+                            className="rounded border border-slate-300 px-3 py-1 text-xs font-medium text-slate-700 hover:bg-slate-100 cursor-pointer"
                           >
                             Reject
                           </button>
