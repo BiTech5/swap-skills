@@ -6,6 +6,9 @@ import {
 
 export const createRequest=async(req,res)=>{
     try{
+        if (req.user.id === req.body.receiver) {
+            return res.status(400).send("You cannot send a request to yourself");
+        }
         const requests=await Requests.create({
             sender:req.user.id,
             receiver:req.body.receiver,

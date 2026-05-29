@@ -92,13 +92,13 @@ const Register = () => {
               </div>
             </div>
             <div>
-              <label htmlFor="confirmPassword" className="block text-sm font-medium text-slate-700">Confirm Password</label>
+              <label htmlFor="confirmPassword" title="Confirm Password" className="block text-sm font-medium text-slate-700">Confirm Password</label>
               <div className="mt-2 flex items-center gap-2">
                 <input
                   id="confirmPassword"
                   name="confirmPassword"
                   type={showConfirmPassword ? "text" : "password"}
-                  placeholder="Re-enter your password"
+                  placeholder="Confirm your password"
                   className="block w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100"
                   value={formData.confirmPassword}
                   onChange={handleChange}
@@ -117,7 +117,7 @@ const Register = () => {
               type="submit"
               className="w-full rounded-2xl bg-blue-600 px-4 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700 cursor-pointer"
             >
-              Create Account
+              Sign up
             </button>
           </form>
           <div className="mt-8 text-center text-sm text-slate-500">

@@ -3,6 +3,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Home from "./pages/Home";
 import Search from "./pages/Search";
+import Requests from "./pages/Requests";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import PublicRoute from "./routes/PublicRoute";
 const App = () => {
@@ -21,6 +22,13 @@ const App = () => {
       element={
         <ProtectedRoute>
           <Search/>
+        </ProtectedRoute>
+      }/>
+      <Route
+      path="/requests"
+      element={
+        <ProtectedRoute>
+          <Requests/>
         </ProtectedRoute>
       }/>
       <Route path="/login" element={

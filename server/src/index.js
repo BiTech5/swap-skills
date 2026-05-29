@@ -26,27 +26,16 @@ app.use(express.json());
 app.use(morgan('dev'));
 
 app.use('/api/health', healthRoutes);
-// route for auth
-app.use("/auth",authRoutes);
+app.use("/api/auth",authRoutes);
+app.use("/api/user",userRoutes);
+app.use("/api/requests",requestRoutes);
+app.use("/api/reviews",reviewRoutes);
+app.use("/api/search",searchRoutes);
+app.use("/api/notifications",notificationRoutes);
 
 app.get('/', (_req, res) => {
   res.json({ message: 'Swap Skills API is running' });
 });
-
-// user route
-app.use("/user",userRoutes);
-
-// requests route
-app.use("/requests",requestRoutes);
-
-// review route
-app.use("/reviews",reviewRoutes);
-
-//search filter route
-app.use("/search",searchRoutes);
-
-// notification route
-app.use("/notifications",notificationRoutes);
 
 const startServer = async () => {
   try {
