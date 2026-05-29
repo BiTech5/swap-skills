@@ -95,32 +95,24 @@ const Search = () => {
         )}
 
         {!isFetching && hasSearched && data.length === 0 && !error && (
-          <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
-            <div className="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-700 px-6 py-5 text-white">
-              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-300">
-                Search result
-              </p>
-              <h2 className="mt-2 text-2xl font-semibold">No skills found</h2>
-              <p className="mt-2 text-sm text-slate-300">
-                We could not find any users offering{" "}
-                <span className="font-semibold text-white">{searchedSkill}</span>.
-              </p>
-            </div>
-            <div className="px-6 py-5">
-              <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                <div>
-                  <p className="text-sm font-medium text-slate-900">
-                    Try a wider search term
-                  </p>
-                  <p className="mt-1 text-sm text-slate-500">
-                    Use a different spelling or search for a broader skill category.
-                  </p>
-                </div>
-                <div className="flex items-center gap-2 rounded-full bg-slate-100 px-4 py-2 text-sm text-slate-600">
-                  <span className="inline-flex h-2 w-2 rounded-full bg-slate-900" />
-                  No matching profiles
-                </div>
-              </div>
+          <div className="rounded-lg border border-slate-200 bg-white p-8 text-center shadow-sm">
+            <p className="text-xs font-semibold uppercase tracking-[0.25em] text-slate-500">
+              Search result
+            </p>
+            <h2 className="mt-3 text-2xl font-bold text-slate-900">
+              No skill found
+            </h2>
+            <p className="mt-3 text-sm leading-6 text-slate-600">
+              We could not find any users offering{" "}
+              <span className="font-semibold text-slate-900">{searchedSkill}</span>.
+            </p>
+            <div className="mt-6 flex flex-wrap justify-center gap-2">
+              <span className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-medium text-slate-700">
+                No matching profiles
+              </span>
+              <span className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-medium text-slate-700">
+                Try a broader search
+              </span>
             </div>
           </div>
         )}
