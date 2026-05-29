@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useState } from "react";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import api from "../api/api";
 import { createRequest } from "../api/requests";
 import Navbar from "../components/Navbar";
@@ -8,13 +8,6 @@ const Search = () => {
   const [skill, setSkill] = useState("");
   const [requestingUser, setRequestingUser] = useState(null);
   const [message, setMessage] = useState("");
-  const queryClient = useQueryClient();
-
-  useEffect(() => {
-    return () => {
-      queryClient.removeQueries({ queryKey: ["search-users"] });
-    };
-  }, [queryClient]);
 
   const { data = [], refetch, isFetching, error } = useQuery({
     queryKey: ["search-users"],
@@ -53,6 +46,7 @@ const Search = () => {
   };
 
   const hasSearched = data.length > 0 || error || isFetching;
+  const searchedSkill = skill.trim();
 
   return (
     <>
@@ -100,11 +94,33 @@ const Search = () => {
         )}
 
         {!isFetching && hasSearched && data.length === 0 && !error && (
-          <div className="rounded-lg border border-slate-200 bg-white p-8 text-center shadow-sm">
-            <h2 className="text-lg font-semibold text-slate-900">No matches found</h2>
-            <p className="mt-2 text-sm text-slate-500">
-              Try a broader skill name or check the spelling.
-            </p>
+          <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+            <div className="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-700 px-6 py-5 text-white">
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-300">
+                Search result
+              </p>
+              <h2 className="mt-2 text-2xl font-semibold">No skills found</h2>
+              <p className="mt-2 text-sm text-slate-300">
+                We could not find any users offering{" "}
+                <span className="font-semibold text-white">{searchedSkill}</span>.
+              </p>
+            </div>
+            <div className="px-6 py-5">
+              <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                <div>
+                  <p className="text-sm font-medium text-slate-900">
+                    Try a wider search term
+                  </p>
+                  <p className="mt-1 text-sm text-slate-500">
+                    Use a different spelling or search for a broader skill category.
+                  </p>
+                </div>
+                <div className="flex items-center gap-2 rounded-full bg-slate-100 px-4 py-2 text-sm text-slate-600">
+                  <span className="inline-flex h-2 w-2 rounded-full bg-slate-900" />
+                  No matching profiles
+                </div>
+              </div>
+            </div>
           </div>
         )}
 
