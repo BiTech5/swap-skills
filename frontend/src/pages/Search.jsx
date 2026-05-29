@@ -1,10 +1,13 @@
 import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import api from "../api/api";
+import { createRequest } from "../api/requests";
 import Navbar from "../components/Navbar";
 
 const Search = () => {
   const [skill, setSkill] = useState("");
+  const [requestingUser, setRequestingUser] = useState(null);
+  const [message, setMessage] = useState("");
 
   const { data = [], refetch, isFetching, error } = useQuery({
     queryKey: ["search-users"],
@@ -17,9 +20,29 @@ const Search = () => {
     enabled: false,
   });
 
+  const sendRequestMutation = useMutation({
+    mutationFn: createRequest,
+    onSuccess: () => {
+      alert("Request sent successfully!");
+      setRequestingUser(null);
+      setMessage("");
+    },
+    onError: (err) => {
+      alert("Failed to send request: " + (err.response?.data || err.message));
+    }
+  });
+
   const handleSearch = () => {
     if (!skill.trim()) return;
     refetch();
+  };
+
+  const handleSendRequest = (user) => {
+    sendRequestMutation.mutate({
+      receiver: user._id,
+      skill: skill.trim(),
+      message: message
+    });
   };
 
   const hasSearched = data.length > 0 || error || isFetching;
@@ -83,40 +106,78 @@ const Search = () => {
             {data.map((user) => (
               <article
                 key={user._id || user.id || user.email}
-                className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm"
+                className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm flex flex-col justify-between"
               >
-                <div className="flex items-start justify-between gap-4">
-                  <div>
-                    <h2 className="text-lg font-semibold text-slate-900">
-                      {user.name || "Unnamed user"}
-                    </h2>
-                    <p className="mt-2 text-sm leading-6 text-slate-600">
-                      {user.bio || "No bio added yet."}
-                    </p>
+                <div>
+                  <div className="flex items-start justify-between gap-4">
+                    <div>
+                      <h2 className="text-lg font-semibold text-slate-900">
+                        {user.name || "Unnamed user"}
+                      </h2>
+                      <p className="mt-2 text-sm leading-6 text-slate-600">
+                        {user.bio || "No bio added yet."}
+                      </p>
+                    </div>
+                    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-slate-900 text-sm font-semibold text-white">
+                      {(user.name || "U").charAt(0).toUpperCase()}
+                    </div>
                   </div>
-                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-slate-900 text-sm font-semibold text-white">
-                    {(user.name || "U").charAt(0).toUpperCase()}
+
+                  <div className="mt-4">
+                    <p className="mb-2 text-xs font-semibold uppercase text-slate-500">
+                      Skills offered
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      {(user.skillsOffered || user.skillsoffered || []).length > 0 ? (
+                        (user.skillsOffered || user.skillsoffered).map((offeredSkill) => (
+                          <span
+                            key={offeredSkill}
+                            className="rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-700"
+                          >
+                            {offeredSkill}
+                          </span>
+                        ))
+                      ) : (
+                        <span className="text-sm text-slate-500">No skills listed.</span>
+                      )}
+                    </div>
                   </div>
                 </div>
 
-                <div className="mt-4">
-                  <p className="mb-2 text-xs font-semibold uppercase text-slate-500">
-                    Skills offered
-                  </p>
-                  <div className="flex flex-wrap gap-2">
-                    {(user.skillsOffered || user.skillsoffered || []).length > 0 ? (
-                      (user.skillsOffered || user.skillsoffered).map((offeredSkill) => (
-                        <span
-                          key={offeredSkill}
-                          className="rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-700"
+                <div className="mt-6 pt-4 border-t border-slate-100">
+                  {requestingUser === user._id ? (
+                    <div className="space-y-3">
+                      <textarea
+                        value={message}
+                        onChange={(e) => setMessage(e.target.value)}
+                        placeholder="Add a message (optional)..."
+                        className="w-full rounded-md border border-slate-300 p-2 text-sm text-slate-900 outline-none focus:border-slate-900"
+                        rows="2"
+                      />
+                      <div className="flex gap-2">
+                        <button
+                          onClick={() => handleSendRequest(user)}
+                          disabled={sendRequestMutation.isPending}
+                          className="flex-1 rounded-md bg-slate-900 py-2 text-xs font-medium text-white hover:bg-slate-700 disabled:bg-slate-400"
                         >
-                          {offeredSkill}
-                        </span>
-                      ))
-                    ) : (
-                      <span className="text-sm text-slate-500">No skills listed.</span>
-                    )}
-                  </div>
+                          {sendRequestMutation.isPending ? "Sending..." : "Confirm Request"}
+                        </button>
+                        <button
+                          onClick={() => setRequestingUser(null)}
+                          className="rounded-md border border-slate-300 px-4 py-2 text-xs font-medium text-slate-700 hover:bg-slate-100"
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    </div>
+                  ) : (
+                    <button
+                      onClick={() => setRequestingUser(user._id)}
+                      className="w-full rounded-md border border-slate-900 py-2 text-xs font-medium text-slate-900 transition hover:bg-slate-900 hover:text-white"
+                    >
+                      Send Swap Request
+                    </button>
+                  )}
                 </div>
               </article>
             ))}
