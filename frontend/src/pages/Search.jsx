@@ -10,7 +10,12 @@ const Search = () => {
   const [message, setMessage] = useState("");
   const [hasSearched, setHasSearched] = useState(false);
 
-  const { data = [], refetch, isFetching, error } = useQuery({
+  const {
+    data = [],
+    refetch,
+    isFetching,
+    error,
+  } = useQuery({
     queryKey: ["search-users"],
     queryFn: async () => {
       const res = await api.get("/search", {
@@ -30,7 +35,7 @@ const Search = () => {
     },
     onError: (err) => {
       alert("Failed to send request: " + (err.response?.data || err.message));
-    }
+    },
   });
 
   const handleSearch = () => {
@@ -43,7 +48,7 @@ const Search = () => {
     sendRequestMutation.mutate({
       receiver: user._id,
       skill: skill.trim(),
-      message: message
+      message: message,
     });
   };
 
@@ -55,8 +60,12 @@ const Search = () => {
       <main className="mx-auto w-full max-w-6xl px-4 py-6">
         <section className="mb-6">
           <div className="mb-4">
-            <p className="text-sm font-medium text-slate-500">Find skill partners</p>
-            <h1 className="mt-1 text-2xl font-bold text-slate-900">Search skills</h1>
+            <p className="text-sm font-medium text-slate-500">
+              Find skill partners
+            </p>
+            <h1 className="mt-1 text-2xl font-bold text-slate-900">
+              Search skills
+            </h1>
           </div>
 
           <div className="rounded-lg border border-slate-200 bg-white p-4 shadow-sm">
@@ -96,24 +105,9 @@ const Search = () => {
 
         {!isFetching && hasSearched && data.length === 0 && !error && (
           <div className="rounded-lg border border-slate-200 bg-white p-8 text-center shadow-sm">
-            <p className="text-xs font-semibold uppercase tracking-[0.25em] text-slate-500">
-              Search result
-            </p>
             <h2 className="mt-3 text-2xl font-bold text-slate-900">
               No skill found
             </h2>
-            <p className="mt-3 text-sm leading-6 text-slate-600">
-              We could not find any users offering{" "}
-              <span className="font-semibold text-slate-900">{searchedSkill}</span>.
-            </p>
-            <div className="mt-6 flex flex-wrap justify-center gap-2">
-              <span className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-medium text-slate-700">
-                No matching profiles
-              </span>
-              <span className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-medium text-slate-700">
-                Try a broader search
-              </span>
-            </div>
           </div>
         )}
 
@@ -144,17 +138,22 @@ const Search = () => {
                       Skills offered
                     </p>
                     <div className="flex flex-wrap gap-2">
-                      {(user.skillsOffered || user.skillsoffered || []).length > 0 ? (
-                        (user.skillsOffered || user.skillsoffered).map((offeredSkill) => (
-                          <span
-                            key={offeredSkill}
-                            className="rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-700"
-                          >
-                            {offeredSkill}
-                          </span>
-                        ))
+                      {(user.skillsOffered || user.skillsoffered || []).length >
+                      0 ? (
+                        (user.skillsOffered || user.skillsoffered).map(
+                          (offeredSkill) => (
+                            <span
+                              key={offeredSkill}
+                              className="rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-700"
+                            >
+                              {offeredSkill}
+                            </span>
+                          ),
+                        )
                       ) : (
-                        <span className="text-sm text-slate-500">No skills listed.</span>
+                        <span className="text-sm text-slate-500">
+                          No skills listed.
+                        </span>
                       )}
                     </div>
                   </div>
@@ -176,7 +175,9 @@ const Search = () => {
                           disabled={sendRequestMutation.isPending}
                           className="flex-1 rounded-md bg-slate-900 py-2 text-xs font-medium text-white hover:bg-slate-700 disabled:bg-slate-400 cursor-pointer"
                         >
-                          {sendRequestMutation.isPending ? "Sending..." : "Confirm Request"}
+                          {sendRequestMutation.isPending
+                            ? "Sending..."
+                            : "Confirm Request"}
                         </button>
                         <button
                           onClick={() => setRequestingUser(null)}
@@ -202,7 +203,9 @@ const Search = () => {
 
         {!hasSearched && (
           <div className="rounded-lg border border-dashed border-slate-300 bg-slate-50 p-8 text-center">
-            <h2 className="text-lg font-semibold text-slate-900">Start with a skill</h2>
+            <h2 className="text-lg font-semibold text-slate-900">
+              Start with a skill
+            </h2>
             <p className="mt-2 text-sm text-slate-500">
               Search by the skill you want to learn or exchange.
             </p>

@@ -2,10 +2,12 @@ import axios from "axios";
 import { API_URLS } from "./apiRoutes";
 import useAuthStore from "../store/authStore";
 
-const baseURL = import.meta.env.VITE_API_BASE_URL;
+const rawBaseURL = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000";
+const baseURL = rawBaseURL.replace(/\/$/, "");
+const apiBaseURL = baseURL.endsWith("/api") ? baseURL : `${baseURL}/api`;
 
-const api = axios.create({ baseURL });
-const refreshApi = axios.create({ baseURL });
+const api = axios.create({ baseURL: apiBaseURL });
+const refreshApi = axios.create({ baseURL: apiBaseURL });
 
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem("token");
