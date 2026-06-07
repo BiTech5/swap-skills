@@ -58,9 +58,9 @@ const Home = () => {
                 <Link to="/requests" className="rounded-lg border border-slate-300 px-4 py-2 text-center text-sm font-medium text-slate-700 transition hover:bg-slate-200">
                   View Requests
                 </Link>
-                <button className="rounded-lg border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-200 cursor-not-allowed opacity-50">
-                  Edit Profile (Coming Soon)
-                </button>
+                <Link to="/edit-profile"  className="rounded-lg border border-slate-300 px-4 py-2 text-center text-sm font-medium text-slate-700 transition hover:bg-slate-200">
+                  Edit Profile
+                </Link>
               </div>
             </article>
           </section>

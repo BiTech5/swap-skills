@@ -4,6 +4,7 @@ import Register from "./pages/Register";
 import Home from "./pages/Home";
 import Search from "./pages/Search";
 import Requests from "./pages/Requests";
+import EditProfile from "./pages/EditProfile";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import PublicRoute from "./routes/PublicRoute";
 const App = () => {
@@ -42,6 +43,11 @@ const App = () => {
           <Register />
         </PublicRoute>
     } />
+      <Route path="/edit-profile" element={
+        <ProtectedRoute>
+          <EditProfile />
+        </ProtectedRoute>
+      } />
     </Routes>
   );
 };

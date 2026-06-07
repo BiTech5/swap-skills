@@ -1,0 +1,13 @@
+import Navbar from "../components/Navbar";
+
+const EditProfile = () => {
+  return (
+    <div>
+      <Navbar />
+      <h1>Edit Profile</h1>
+      <p>This is the edit profile page.</p>
+    </div>
+  );
+};
+
+export default EditProfile;
