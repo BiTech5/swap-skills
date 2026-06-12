@@ -13,7 +13,7 @@ import requestRoutes from "./routes/requestsRoutes.js";
 import reviewRoutes from "./routes/reviewRoutes.js";
 import searchRoutes from "./routes/searchRoutes.js";
 import notificationRoutes from "./routes/notificationRoutes.js";
-
+import skillsPostsRoutes from "./routes/skillsPostsRoutes.js";
 
 dotenv.config();
 
@@ -32,7 +32,7 @@ app.use("/api/requests",requestRoutes);
 app.use("/api/reviews",reviewRoutes);
 app.use("/api/search",searchRoutes);
 app.use("/api/notifications",notificationRoutes);
-
+app.use("/api/skills-posts",skillsPostsRoutes);
 app.get('/', (_req, res) => {
   res.json({ message: 'Swap Skills API is running' });
 });

@@ -4,6 +4,6 @@ import auth from "../middleware/auth.js";
 
 const router = express.Router();
 
-router.get("/skills-posts", auth, getSkillsPosts);
+router.get("/", auth, getSkillsPosts);
 
 export default router;
