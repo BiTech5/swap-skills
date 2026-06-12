@@ -18,8 +18,8 @@ function Navbar() {
         </NavLink>
 
         <nav className="flex items-center gap-2">
-          <NavLink to="/" className={linkClass}>
-            Dashboard
+          <NavLink to="/profile" className={linkClass}>
+            Profile
           </NavLink>
           <NavLink to="/search" className={linkClass}>
             Search

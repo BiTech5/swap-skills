@@ -1,7 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import Home from "./pages/Home";
+import Home from "./pages/Profile";
 import Search from "./pages/Search";
 import Requests from "./pages/Requests";
 import EditProfile from "./pages/EditProfile";
@@ -11,7 +11,7 @@ const App = () => {
   return (
     <Routes>
       <Route
-        path="/"
+        path="/profile"
         element={
           <ProtectedRoute>
             <Home />
